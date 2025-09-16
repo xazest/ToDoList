@@ -41,15 +41,30 @@ namespace TodoList.Identity.Controllers
                 ModelState.AddModelError(string.Empty, "User not found");
                 return View(viewModel);
             }
-
-            var result = await _signInManager.PasswordSignInAsync(viewModel.Username,
-                viewModel.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(
+                viewModel.Username,
+                viewModel.Password,
+                isPersistent: false,
+                lockoutOnFailure: true
+            );
             if (result.Succeeded)
             {
-                return Redirect(viewModel.ReturnUrl);
+                if (!string.IsNullOrEmpty(viewModel.ReturnUrl) && Url.IsLocalUrl(viewModel.ReturnUrl))
+                {
+                    return Redirect(viewModel.ReturnUrl);
+                }
+                return RedirectToAction("Index", "Home");
             }
-            ModelState.AddModelError(string.Empty, "Login error");
-            return View(viewModel);
+            if (result.IsLockedOut)
+            {
+                ModelState.AddModelError(string.Empty, "Account locked out due to multiple failed attempts. Please try again later.");
+                return View(viewModel);
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Invalid username or password");
+                return View(viewModel);
+            }
         }
 
         [HttpGet]
@@ -78,18 +93,32 @@ namespace TodoList.Identity.Controllers
             var result = await _userManager.CreateAsync(user, viewModel.Password);
             if (result.Succeeded)
             {
-                await _signInManager.SignInAsync(user, false);
-                return Redirect(viewModel.ReturnUrl);
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                if (!string.IsNullOrEmpty(viewModel.ReturnUrl) && Url.IsLocalUrl(viewModel.ReturnUrl))
+                {
+                    return Redirect(viewModel.ReturnUrl);
+                }
+                return RedirectToAction("Index", "Home");
             }
-            ModelState.AddModelError(string.Empty, "Error occurred");
-            return View(viewModel);
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Error");
+                return View(viewModel);
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> Logout(string logoutId)
         {
             await _signInManager.SignOutAsync();
+
             var logoutRequest = await _interactionService.GetLogoutContextAsync(logoutId);
+
+            if (logoutRequest == null || string.IsNullOrEmpty(logoutRequest.PostLogoutRedirectUri))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return Redirect(logoutRequest.PostLogoutRedirectUri);
         }
     }
