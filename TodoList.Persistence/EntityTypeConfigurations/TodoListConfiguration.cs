@@ -1,0 +1,22 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TodoList.Domain;
+
+namespace TodoList.Persistence.EntityTypeConfigurations
+{
+    public class TodoListConfiguration : IEntityTypeConfiguration<TodoListItem>
+    {
+        public void Configure(EntityTypeBuilder<TodoListItem> builder)
+        {
+            builder.ToTable("TodoLists");
+            builder.HasKey(t => t.Id);
+            builder.HasIndex(t=> t.Id).IsUnique();
+            builder.Property(t => t.UserId).IsRequired();
+            builder.Property(t => t.Title).IsRequired().HasMaxLength(200);
+            builder.Property(t => t.IsCompleted).IsRequired().HasDefaultValue(false);
+            builder.Property(t => t.CreatedAt).IsRequired().HasDefaultValueSql("NOW()");
+            builder.Property(t => t.UpdatedAt);
+            builder.Property(t => t.CompletedAt);
+        }
+    }
+}
