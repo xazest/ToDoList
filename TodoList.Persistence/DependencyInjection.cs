@@ -7,7 +7,7 @@ namespace TodoList.Persistence
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddPersistenceServices(this IServiceCollection services,
+        public static IServiceCollection AddPersistence(this IServiceCollection services,
             IConfiguration configuration)
         {
             services.AddDbContext<TodoListDbContext>(options =>

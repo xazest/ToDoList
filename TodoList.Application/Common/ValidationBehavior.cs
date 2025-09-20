@@ -18,7 +18,7 @@ namespace TodoList.Application.Common
             RequestHandlerDelegate<TResponse> next,
             CancellationToken cancellationToken)
         {
-            if (!_validators.Any())
+            if (!_validators?.Any() ?? true)
             {
                 return await next();
             }

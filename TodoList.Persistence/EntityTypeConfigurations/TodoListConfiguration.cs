@@ -14,7 +14,7 @@ namespace TodoList.Persistence.EntityTypeConfigurations
             builder.Property(t => t.UserId).IsRequired();
             builder.Property(t => t.Title).IsRequired().HasMaxLength(200);
             builder.Property(t => t.IsCompleted).IsRequired().HasDefaultValue(false);
-            builder.Property(t => t.CreatedAt).IsRequired().HasDefaultValueSql("NOW()");
+            builder.Property(t => t.CreatedAt).IsRequired();
             builder.Property(t => t.UpdatedAt);
             builder.Property(t => t.CompletedAt);
         }
