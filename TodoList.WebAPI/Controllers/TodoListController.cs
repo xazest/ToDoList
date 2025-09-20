@@ -6,6 +6,8 @@ using TodoList.Application.Interfaces;
 using TodoList.Application.TodoLists.Commands.CreateTodoList;
 using TodoList.Application.TodoLists.Commands.DeleteTodoList;
 using TodoList.Application.TodoLists.Commands.UpdateTodoList;
+using TodoList.Application.TodoLists.Queries.GetListOfTodoList;
+using TodoList.Application.TodoLists.Queries.GetTodoList;
 using TodoList.WebAPI.Models;
 
 namespace TodoList.WebAPI.Controllers
@@ -26,6 +28,29 @@ namespace TodoList.WebAPI.Controllers
             _mapper = mapper;
             _mediator = mediator;
             _currentUserService = currentUserService;
+        }
+        [HttpGet]
+        public async Task<ActionResult<ListOfTodoListDto>> GetAll()
+        {
+            var query = new GetListOfTodoListQuery
+            {
+                UserId = _currentUserService.UserId
+            };
+            var todoLists = await _mediator.Send(query);
+            return Ok(todoLists);
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TodoListDto>> Get(Guid id)
+        {
+            var query = new GetTodoListQuery
+            {
+                Id = id,
+                UserId = _currentUserService.UserId
+            };
+            var todoList = await _mediator.Send(query);
+            if (todoList == null)
+                return NotFound();
+            return Ok(todoList);
         }
 
         [HttpPost]

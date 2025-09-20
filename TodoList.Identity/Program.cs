@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using TodoList.Identity;
 using TodoList.Identity.Data;
 using TodoList.Identity.Models;
 
@@ -14,27 +15,28 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
 
 builder.Services.AddIdentityServer()
     .AddAspNetIdentity<AppUser>()
-    .AddConfigurationStore(options =>
-    {
-        options.ConfigureDbContext = b =>
-            b.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection"));
-    })
-    .AddOperationalStore(options =>
-    {
-        options.ConfigureDbContext = b =>
-            b.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection"));
-    })
+    .AddInMemoryClients(Config.Clients)
+    .AddInMemoryApiScopes(Config.ApiScopes)
+    .AddInMemoryIdentityResources(Config.IdentityResources)
     .AddDeveloperSigningCredential();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllers();
+
+builder.Services.AddAuthentication()
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.Authority = "https://localhost:5001";
+        options.TokenValidationParameters.ValidateAudience = false;
+    });
 
 var app = builder.Build();
 
-app.UseStaticFiles();
 app.UseRouting();
 app.UseIdentityServer();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapDefaultControllerRoute();
+app.MapControllers();
 
 app.Run();
