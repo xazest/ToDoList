@@ -1,9 +1,10 @@
-﻿using TodoList.Application.Interfaces;
+﻿using MediatR;
+using TodoList.Application.Interfaces;
 using TodoList.Domain;
 
 namespace TodoList.Application.TodoLists.Commands.CreateTodoList
 {
-    public class CreateTodoListCommandHandler
+    public class CreateTodoListCommandHandler : IRequestHandler<CreateTodoListCommand, Guid>
     {
         private readonly ITodoListDbContext _dbContext;
         public CreateTodoListCommandHandler(ITodoListDbContext dbContext)

@@ -14,7 +14,9 @@ namespace TodoList.WebAPI.Models
         {
             profile.CreateMap<CreateTodoListDto, CreateTodoListCommand>()
                 .ForMember(command => command.Title,
-                    opt => opt.MapFrom(dto => dto.Title));
+                    opt => opt.MapFrom(dto => dto.Title))
+                .ForMember(command => command.Description,
+                    opt => opt.MapFrom(dto => dto.Description));
         }
     }
 }

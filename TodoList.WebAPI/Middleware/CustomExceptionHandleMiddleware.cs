@@ -31,8 +31,21 @@ namespace TodoList.WebAPI.Middleware
                     code = HttpStatusCode.BadRequest;
                     result = JsonSerializer.Serialize(ve.Errors);
                     break;
+
                 case NotFoundException:
                     code = HttpStatusCode.NotFound;
+                    break;
+
+                case UnauthorizedAccessException:
+                    code = HttpStatusCode.Unauthorized;
+                    break;
+
+                case InvalidOperationException:
+                    code = HttpStatusCode.BadRequest;
+                    break;
+
+                default:
+                    code = HttpStatusCode.InternalServerError;
                     break;
             }
             context.Response.ContentType = "application/json";
