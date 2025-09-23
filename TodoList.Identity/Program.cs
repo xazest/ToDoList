@@ -22,13 +22,6 @@ builder.Services.AddIdentityServer()
 
 builder.Services.AddControllers();
 
-builder.Services.AddAuthentication()
-    .AddJwtBearer("Bearer", options =>
-    {
-        options.Authority = "https://localhost:5001";
-        options.TokenValidationParameters.ValidateAudience = false;
-    });
-
 var app = builder.Build();
 
 app.UseRouting();
