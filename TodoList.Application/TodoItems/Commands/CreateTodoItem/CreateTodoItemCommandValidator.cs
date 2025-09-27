@@ -1,16 +1,14 @@
 ﻿
 using FluentValidation;
 
-namespace TodoList.Application.TodoLists.Commands.UpdateTodoList
+namespace TodoList.Application.TodoItems.Commands.CreateTodoItem
 {
-    public class UpdateTodoListCommandValidator : AbstractValidator<UpdateTodoListCommand>
+    public class CreateTodoItemCommandValidator : AbstractValidator<CreateTodoItemCommand>
     {
-        public UpdateTodoListCommandValidator()
+        public CreateTodoItemCommandValidator()
         {
             RuleFor(x => x.UserId)
                 .NotEmpty().WithMessage("UserId is required.");
-            RuleFor(x => x.Id)
-                .NotEmpty().WithMessage("Id is required.");
             RuleFor(x => x.Title)
                 .NotEmpty().WithMessage("Title is required.")
                 .MaximumLength(200).WithMessage("Title must not exceed 200 characters.");

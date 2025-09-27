@@ -2,15 +2,15 @@
 using TodoList.Domain;
 using AutoMapper;
 
-namespace TodoList.Application.TodoLists.Queries.GetListOfTodoList
+namespace TodoList.Application.TodoItems.Queries.GetTodoItemList
 {
-    public class TodoListLookupDto : IMapWith<TodoListItem>
+    public class TodoItemLookupDto : IMapWith<TodoItem>
     {
         public Guid Id { get; set; }   
         public string Title { get; set; }
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<TodoListItem, TodoListLookupDto>()
+            profile.CreateMap<TodoItem, TodoItemLookupDto>()
                 .ForMember(todoListDto => todoListDto.Id,
                     opt => opt.MapFrom(todoList => todoList.Id))
                 .ForMember(todoListDto => todoListDto.Title,

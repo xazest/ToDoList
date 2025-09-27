@@ -50,7 +50,7 @@ builder.Services.AddAuthentication(options =>
 .AddJwtBearer(options =>
 {
     options.Authority = builder.Configuration["IdentityServer:Authority"];
-    options.Audience = "TodoList.Backend";
+    options.Audience = "api1";
     options.RequireHttpsMetadata = false;
 });
 

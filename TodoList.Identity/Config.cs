@@ -16,6 +16,8 @@ namespace TodoList.Identity
 
         public static IEnumerable<ApiScope> ApiScopes =>
             [new ApiScope("api1", "TodoList API")];
+        public static IEnumerable<ApiResource> ApiResources =>
+            [new ApiResource("api1", "TodoList API") { Scopes = {"api1"}}];
 
         public static IEnumerable<IdentityResource> IdentityResources =>
             [

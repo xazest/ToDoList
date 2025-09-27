@@ -1,9 +1,9 @@
 ﻿using TodoList.Application.Common.Mappings;
 using TodoList.Domain;
 
-namespace TodoList.Application.TodoLists.Queries.GetTodoList
+namespace TodoList.Application.TodoItems.Queries.GetTodoItem
 {
-    public class TodoListDto : IMapWith<TodoListItem>
+    public class TodoItemDto : IMapWith<TodoItem>
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
@@ -14,7 +14,7 @@ namespace TodoList.Application.TodoLists.Queries.GetTodoList
         public DateTime? CompletedAt { get; set; }
         public void Mapping(AutoMapper.Profile profile)
         {
-            profile.CreateMap<TodoListItem, TodoListDto>()
+            profile.CreateMap<TodoItem, TodoItemDto>()
                 .ForMember(dto => dto.Id,
                     opt => opt.MapFrom(todo => todo.Id))
                 .ForMember(dto => dto.Title,

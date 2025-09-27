@@ -4,9 +4,9 @@ using TodoList.Domain;
 
 namespace TodoList.Persistence.EntityTypeConfigurations
 {
-    public class TodoListConfiguration : IEntityTypeConfiguration<TodoListItem>
+    public class TodoListConfiguration : IEntityTypeConfiguration<TodoItem>
     {
-        public void Configure(EntityTypeBuilder<TodoListItem> builder)
+        public void Configure(EntityTypeBuilder<TodoItem> builder)
         {
             builder.ToTable("TodoLists");
             builder.HasKey(t => t.Id);

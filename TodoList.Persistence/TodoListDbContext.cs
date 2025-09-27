@@ -7,7 +7,7 @@ namespace TodoList.Persistence
 {
     public class TodoListDbContext : DbContext, ITodoListDbContext
     {
-        public DbSet<TodoListItem> TodoListItems { get; set; }
+        public DbSet<TodoItem> TodoListItems { get; set; }
         public TodoListDbContext(DbContextOptions<TodoListDbContext> options) : base(options){}
         protected override void OnModelCreating(ModelBuilder builder)
         {

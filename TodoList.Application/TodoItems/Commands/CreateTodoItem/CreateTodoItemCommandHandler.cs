@@ -2,18 +2,18 @@
 using TodoList.Application.Interfaces;
 using TodoList.Domain;
 
-namespace TodoList.Application.TodoLists.Commands.CreateTodoList
+namespace TodoList.Application.TodoItems.Commands.CreateTodoItem
 {
-    public class CreateTodoListCommandHandler : IRequestHandler<CreateTodoListCommand, Guid>
+    public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemCommand, Guid>
     {
         private readonly ITodoListDbContext _dbContext;
-        public CreateTodoListCommandHandler(ITodoListDbContext dbContext)
+        public CreateTodoItemCommandHandler(ITodoListDbContext dbContext)
         {
             _dbContext = dbContext;
         }
-        public async Task<Guid> Handle(CreateTodoListCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
         {
-            var entity = new TodoListItem
+            var entity = new TodoItem
             {
                 Id = Guid.NewGuid(),
                 UserId = request.UserId,

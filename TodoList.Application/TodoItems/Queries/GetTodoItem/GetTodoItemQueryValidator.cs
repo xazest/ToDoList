@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace TodoList.Application.TodoLists.Queries.GetTodoList
+namespace TodoList.Application.TodoItems.Queries.GetTodoItem
 {
-    public class GetTodoListQueryValidator : AbstractValidator<GetTodoListQuery>
+    public class GetTodoItemQueryValidator : AbstractValidator<GetTodoItemQuery>
     {
-        public GetTodoListQueryValidator()
+        public GetTodoItemQueryValidator()
         {
             RuleFor(x => x.UserId).NotEmpty().WithMessage("UserId is required.");
             RuleFor(x => x.Id).NotEmpty().WithMessage("Id is required.");

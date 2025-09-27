@@ -1,6 +1,6 @@
 ﻿namespace TodoList.Domain
 {
-    public class TodoListItem
+    public class TodoItem
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }

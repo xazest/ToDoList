@@ -1,8 +1,8 @@
 ﻿using MediatR;
 
-namespace TodoList.Application.TodoLists.Commands.CreateTodoList
+namespace TodoList.Application.TodoItems.Commands.CreateTodoItem
 {
-    public class CreateTodoListCommand : IRequest<Guid>
+    public class CreateTodoItemCommand : IRequest<Guid>
     {
         public Guid UserId { get; set; }
         public string Title { get; set; } = string.Empty;

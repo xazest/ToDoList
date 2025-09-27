@@ -4,29 +4,29 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TodoList.Application.Interfaces;
 
-namespace TodoList.Application.TodoLists.Queries.GetListOfTodoList
+namespace TodoList.Application.TodoItems.Queries.GetTodoItemList
 {
-    public class GetListOfTodoListQueryHandler
-        : IRequestHandler<GetListOfTodoListQuery, ListOfTodoListDto>
+    public class GetTodoItemListQueryHandler
+        : IRequestHandler<GetTodoItemListQuery, TodoItemListDto>
     {
         private readonly ITodoListDbContext _dbContext;
         private readonly IMapper _mapper;
-        public GetListOfTodoListQueryHandler(
+        public GetTodoItemListQueryHandler(
             ITodoListDbContext dbContext,
             IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
         }
-        public async Task<ListOfTodoListDto> Handle(GetListOfTodoListQuery request, 
+        public async Task<TodoItemListDto> Handle(GetTodoItemListQuery request, 
             CancellationToken cancellationToken)
         {
             var todoListsQuery = await _dbContext.TodoListItems
                 .Where(t => t.UserId == request.UserId)
-                .ProjectTo<TodoListLookupDto>(_mapper.ConfigurationProvider)
+                .ProjectTo<TodoItemLookupDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
-            return new ListOfTodoListDto { TodoListDtos = todoListsQuery };
+            return new TodoItemListDto { TodoListDtos = todoListsQuery };
         }
     }
 }

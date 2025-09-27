@@ -3,11 +3,13 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TodoList.Application.Interfaces;
-using TodoList.Application.TodoLists.Commands.CreateTodoList;
+using TodoList.Application.TodoItems.Commands.CreateTodoItem;
+using TodoList.Application.TodoItems.Commands.UpdateTodoItem;
+using TodoList.Application.TodoItems.Queries.GetTodoItem;
+using TodoList.Application.TodoItems.Queries.GetTodoItemList;
 using TodoList.Application.TodoLists.Commands.DeleteTodoList;
-using TodoList.Application.TodoLists.Commands.UpdateTodoList;
-using TodoList.Application.TodoLists.Queries.GetListOfTodoList;
-using TodoList.Application.TodoLists.Queries.GetTodoList;
+using TodoList.Application.TodoLists.Queries.GetTodoItem;
+using TodoList.Application.TodoLists.Queries.GetTodoItemList;
 using TodoList.WebAPI.Models;
 
 namespace TodoList.WebAPI.Controllers
@@ -30,9 +32,9 @@ namespace TodoList.WebAPI.Controllers
             _currentUserService = currentUserService;
         }
         [HttpGet]
-        public async Task<ActionResult<ListOfTodoListDto>> GetAll()
+        public async Task<ActionResult<TodoItemListDto>> GetAll()
         {
-            var query = new GetListOfTodoListQuery
+            var query = new GetTodoItemListQuery
             {
                 UserId = _currentUserService.UserId
             };
@@ -40,9 +42,9 @@ namespace TodoList.WebAPI.Controllers
             return Ok(todoLists);
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<TodoListDto>> Get(Guid id)
+        public async Task<ActionResult<TodoItemDto>> Get(Guid id)
         {
-            var query = new GetTodoListQuery
+            var query = new GetTodoItemQuery
             {
                 Id = id,
                 UserId = _currentUserService.UserId
@@ -56,7 +58,7 @@ namespace TodoList.WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Guid>> Create([FromBody] CreateTodoListDto dto)
         {
-            var command = _mapper.Map<CreateTodoListCommand>(dto);
+            var command = _mapper.Map<CreateTodoItemCommand>(dto);
             command.UserId = _currentUserService.UserId;
             var todoListId = await _mediator.Send(command);
             return Ok(todoListId);
@@ -65,7 +67,7 @@ namespace TodoList.WebAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdateTodoListDto dto)
         {
-            var command = _mapper.Map<UpdateTodoListCommand>(dto);
+            var command = _mapper.Map<UpdateTodoItemCommand>(dto);
             command.Id = id;
             command.UserId = _currentUserService.UserId;
             await _mediator.Send(command);
@@ -75,7 +77,7 @@ namespace TodoList.WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var command = new DeleteTodoListCommand
+            var command = new DeleteTodoItemCommand
             {
                 Id = id,
                 UserId = _currentUserService.UserId

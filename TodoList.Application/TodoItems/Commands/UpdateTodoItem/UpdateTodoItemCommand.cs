@@ -1,8 +1,8 @@
 ﻿using MediatR;
 
-namespace TodoList.Application.TodoLists.Commands.UpdateTodoList
+namespace TodoList.Application.TodoItems.Commands.UpdateTodoItem
 {
-    public class UpdateTodoListCommand : IRequest
+    public class UpdateTodoItemCommand : IRequest
     {
         public Guid UserId { get; set; }
         public Guid Id { get; set; }

@@ -1,11 +1,11 @@
 ﻿
 using FluentValidation;
 
-namespace TodoList.Application.TodoLists.Commands.DeleteTodoList
+namespace TodoList.Application.TodoItems.Commands.DeleteTodoItem
 {
-    public class DeleteTodoListCommandValidator : AbstractValidator<DeleteTodoListCommand>
+    public class DeleteTodoItemCommandValidator : AbstractValidator<DeleteTodoItemCommand>
     {
-        public DeleteTodoListCommandValidator()
+        public DeleteTodoItemCommandValidator()
         {
             RuleFor(x => x.UserId).NotEmpty().WithMessage("UserId is required.");
             RuleFor(x => x.Id).NotEmpty().WithMessage("Id is required.");
