@@ -4,12 +4,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TodoList.Application.Interfaces;
 using TodoList.Application.TodoItems.Commands.CreateTodoItem;
+using TodoList.Application.TodoItems.Commands.DeleteTodoItem;
 using TodoList.Application.TodoItems.Commands.UpdateTodoItem;
 using TodoList.Application.TodoItems.Queries.GetTodoItem;
 using TodoList.Application.TodoItems.Queries.GetTodoItemList;
-using TodoList.Application.TodoLists.Commands.DeleteTodoList;
-using TodoList.Application.TodoLists.Queries.GetTodoItem;
-using TodoList.Application.TodoLists.Queries.GetTodoItemList;
 using TodoList.WebAPI.Models;
 
 namespace TodoList.WebAPI.Controllers
