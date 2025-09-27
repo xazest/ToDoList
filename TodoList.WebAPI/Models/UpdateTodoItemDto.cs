@@ -1,22 +1,23 @@
 ﻿using AutoMapper;
-using System.ComponentModel.DataAnnotations;
 using TodoList.Application.Common.Mappings;
-using TodoList.Application.TodoItems.Commands.CreateTodoItem;
+using TodoList.Application.TodoItems.Commands.UpdateTodoItem;
 
 namespace TodoList.WebAPI.Models
 {
-    public class CreateTodoListDto : IMapWith<CreateTodoItemCommand>
+    public class UpdateTodoItemDto :IMapWith<UpdateTodoItemCommand>
     {
-        [Required]
         public string Title { get; set; }
         public string Description { get; set; }
+        public bool IsCompleted { get; set; }
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CreateTodoListDto, CreateTodoItemCommand>()
+            profile.CreateMap<UpdateTodoItemDto, UpdateTodoItemCommand>()
                 .ForMember(command => command.Title,
                     opt => opt.MapFrom(dto => dto.Title))
                 .ForMember(command => command.Description,
-                    opt => opt.MapFrom(dto => dto.Description));
+                    opt => opt.MapFrom(dto => dto.Description))
+                .ForMember(command => command.IsCompleted,
+                    opt => opt.MapFrom(dto => dto.IsCompleted));
         }
     }
 }

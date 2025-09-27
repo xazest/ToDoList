@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using TodoList.Application.Interfaces;
 using TodoList.Application.TodoItems.Commands.CreateTodoItem;
 using TodoList.Application.TodoItems.Commands.DeleteTodoItem;
+using TodoList.Application.TodoItems.Commands.SwitchCompletionTodoItem;
 using TodoList.Application.TodoItems.Commands.UpdateTodoItem;
 using TodoList.Application.TodoItems.Queries.GetTodoItem;
 using TodoList.Application.TodoItems.Queries.GetTodoItemList;
@@ -15,12 +16,12 @@ namespace TodoList.WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class TodoListController : ControllerBase
+    public class TodoItemController : ControllerBase
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
         private readonly ICurrentUserService _currentUserService;
-        public TodoListController(
+        public TodoItemController(
             IMediator mediator,
             IMapper mapper,
             ICurrentUserService currentUserService)
@@ -29,6 +30,18 @@ namespace TodoList.WebAPI.Controllers
             _mediator = mediator;
             _currentUserService = currentUserService;
         }
+        [HttpPatch("{id}/statusswitch")]
+        public async Task<IActionResult> SwitchStatus(Guid id)
+        {
+            var command = new SwitchCompletionTodoItemCommand 
+            { 
+                Id = id,
+                UserId = _currentUserService.UserId 
+            };
+            await _mediator.Send(command);
+            return NoContent();
+        }
+
         [HttpGet]
         public async Task<ActionResult<TodoItemListDto>> GetAll()
         {
@@ -54,16 +67,16 @@ namespace TodoList.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Guid>> Create([FromBody] CreateTodoListDto dto)
+        public async Task<ActionResult<Guid>> Create([FromBody] CreateTodoItemDto dto)
         {
             var command = _mapper.Map<CreateTodoItemCommand>(dto);
             command.UserId = _currentUserService.UserId;
             var todoListId = await _mediator.Send(command);
-            return Ok(todoListId);
+            return Created(string.Empty, todoListId);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateTodoListDto dto)
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateTodoItemDto dto)
         {
             var command = _mapper.Map<UpdateTodoItemCommand>(dto);
             command.Id = id;
