@@ -25,7 +25,7 @@ namespace TodoList.Application.TodoItems.Commands.CreateTodoItem
                 CompletedAt = null
 
             };
-            await _dbContext.TodoListItems.AddAsync(entity, cancellationToken);
+            await _dbContext.TodoItems.AddAsync(entity, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
             return entity.Id;
         }

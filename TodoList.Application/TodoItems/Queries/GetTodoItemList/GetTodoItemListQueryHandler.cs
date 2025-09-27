@@ -21,7 +21,7 @@ namespace TodoList.Application.TodoItems.Queries.GetTodoItemList
         public async Task<TodoItemListDto> Handle(GetTodoItemListQuery request, 
             CancellationToken cancellationToken)
         {
-            var todoListsQuery = await _dbContext.TodoListItems
+            var todoListsQuery = await _dbContext.TodoItems
                 .Where(t => t.UserId == request.UserId)
                 .ProjectTo<TodoItemLookupDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);

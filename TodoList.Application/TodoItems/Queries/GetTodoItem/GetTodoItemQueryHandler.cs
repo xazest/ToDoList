@@ -17,7 +17,7 @@ namespace TodoList.Application.TodoItems.Queries.GetTodoItem
         }
         public async Task<TodoItemDto> Handle(GetTodoItemQuery request, CancellationToken cancellationToken)
         {
-            var entity = await _dbContext.TodoListItems.FindAsync([request.Id], cancellationToken);
+            var entity = await _dbContext.TodoItems.FindAsync([request.Id], cancellationToken);
             if (entity == null || entity.UserId != request.UserId)
             {
                 throw new NotFoundException(nameof(TodoItem), request.Id);

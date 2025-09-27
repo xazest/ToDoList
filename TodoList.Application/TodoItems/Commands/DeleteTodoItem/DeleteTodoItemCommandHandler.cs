@@ -15,12 +15,12 @@ namespace TodoList.Application.TodoItems.Commands.DeleteTodoItem
         }
         public async Task Handle(DeleteTodoItemCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _dbContext.TodoListItems.FindAsync([request.Id], cancellationToken);
+            var entity = await _dbContext.TodoItems.FindAsync([request.Id], cancellationToken);
             if (entity == null || entity.UserId != request.UserId)
             {
                 throw new NotFoundException(nameof (TodoItem), request.Id);
             }
-            _dbContext.TodoListItems.Remove(entity);
+            _dbContext.TodoItems.Remove(entity);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }

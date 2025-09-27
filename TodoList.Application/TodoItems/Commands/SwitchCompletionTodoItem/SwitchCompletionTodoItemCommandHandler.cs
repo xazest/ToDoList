@@ -14,7 +14,7 @@ namespace TodoList.Application.TodoItems.Commands.SwitchCompletionTodoItem
         }
         public async Task Handle(SwitchCompletionTodoItemCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _dbContext.TodoListItems.FindAsync([request.Id], cancellationToken);
+            var entity = await _dbContext.TodoItems.FindAsync([request.Id], cancellationToken);
             if (entity == null || entity.UserId != request.UserId)
             {
                 throw new NotFoundException(nameof(TodoItem), request.Id);
