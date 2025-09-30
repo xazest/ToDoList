@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using TodoList.Identity.Interfaces;
 using TodoList.Identity.Models;
 
 namespace TodoList.Identity.Controllers
@@ -9,10 +10,11 @@ namespace TodoList.Identity.Controllers
     public class AuthController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;
-
-        public AuthController(UserManager<AppUser> userManager)
+        private readonly IRabbitRegisterProducer _rabbitService;
+        public AuthController(UserManager<AppUser> userManager, IRabbitRegisterProducer rabbitService)
         {
             _userManager = userManager;
+            _rabbitService = rabbitService;
         }
 
         [HttpPost("register")]
@@ -25,6 +27,11 @@ namespace TodoList.Identity.Controllers
             {
                 return BadRequest(result.Errors);
             }
+
+            await _rabbitService.ProduceAsync(
+                queueName: "user_registered_queue",
+                userId:user.Id
+            );
 
             return Ok(new { message = "User registered successfully. Login at /connect/token" });
         }

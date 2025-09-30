@@ -2,14 +2,14 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TodoList.Application.Aggregates.TodoItems.Commands.CreateTodoItem;
+using TodoList.Application.Aggregates.TodoItems.Commands.DeleteTodoItem;
+using TodoList.Application.Aggregates.TodoItems.Commands.SwitchCompletionTodoItem;
+using TodoList.Application.Aggregates.TodoItems.Commands.UpdateTodoItem;
+using TodoList.Application.Aggregates.TodoItems.Queries.GetTodoItem;
+using TodoList.Application.Aggregates.TodoItems.Queries.GetTodoItemList;
 using TodoList.Application.Interfaces;
-using TodoList.Application.TodoItems.Commands.CreateTodoItem;
-using TodoList.Application.TodoItems.Commands.DeleteTodoItem;
-using TodoList.Application.TodoItems.Commands.SwitchCompletionTodoItem;
-using TodoList.Application.TodoItems.Commands.UpdateTodoItem;
-using TodoList.Application.TodoItems.Queries.GetTodoItem;
-using TodoList.Application.TodoItems.Queries.GetTodoItemList;
-using TodoList.WebAPI.Models;
+using TodoList.WebAPI.Models.TodoItemDtos;
 
 namespace TodoList.WebAPI.Controllers
 {

@@ -2,12 +2,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TodoList.Identity;
 using TodoList.Identity.Data;
+using TodoList.Identity.Interfaces;
 using TodoList.Identity.Models;
+using TodoList.Identity.Producers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppIdentityDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection")));
+
+builder.Services.AddTransient<IRabbitRegisterProducer, RabbitRegisterProducer>();
 
 builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<AppIdentityDbContext>()

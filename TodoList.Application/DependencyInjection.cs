@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using TodoList.Application.Aggregates.UserProfiles.Events;
 using TodoList.Application.Common;
 
 namespace TodoList.Application
@@ -11,6 +12,8 @@ namespace TodoList.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+            services.AddHostedService<UserRegisteredEvent>();
 
             services.AddValidatorsFromAssemblies([Assembly.GetExecutingAssembly()]);
 

@@ -71,10 +71,10 @@ app.UseSwaggerUI(c =>
 
 app.MapControllers();
 
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<TodoListDbContext>();
-    db.Database.Migrate();
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var db = scope.ServiceProvider.GetRequiredService<TodoListDbContext>();
+//    db.Database.Migrate();
+//}
 
 app.Run();
